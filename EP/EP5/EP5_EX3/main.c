@@ -3,20 +3,15 @@
 #include "heap.h"
 
 int main(void) {
-    int *vetor, size;
-    Heap *pri;
+    int valor;
+    Heap *pri = heap_cria(10);
 
-    scanf("%d", &size);
-    vetor = (int *)malloc(sizeof(int) * size);
-    for (int i = 0; i < size; i++) 
-        scanf("%d", &vetor[i]);
+    while (scanf("%d", &valor) == 1) {
+        inserir(pri, valor);
+    }
     
-    pri = heap_constroi(size, vetor);
-    
-    heap_imprime(pri);
-
+    esvazia_heap(pri);
     heap_libera(pri);
-    free(vetor);
 
     return 0;
 }

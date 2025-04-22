@@ -73,10 +73,9 @@ static void desce (Heap* h, int i)
     }
 }
 
+int heap_retira (Heap* h) {
 
-float heap_retira (Heap* h) {
-
-    float r = h->v[0];
+    int r = h->v[0];
     h->v[0] = h->v[--h->n];
     desce(h,0);
     return r;
@@ -102,11 +101,42 @@ Heap* heap_constroi(int nEntry, int* vector) {
 }
 
 void heap_imprime(Heap * h) {
-    printf("[");
     for (int i = 0; i < h->n; i++) {
         printf("%d", h->v[i]);
         if (i != h->n - 1) 
-            printf(", ");
+            printf(" ");
     }
-    printf("]\n");
+    printf("\n");
+}
+
+void inserir(Heap * prioridades, int valor) {
+    /*
+    if (prioridades == NULL) {
+        prioridades = (Heap * )malloc(sizeof(Heap));
+        prioridades->v = (int *)malloc(sizeof(int) * 10);
+        prioridades->n = 0;
+        prioridades->nmax = 10;
+    }
+    */
+    if (prioridades->n >= prioridades->nmax) {
+        prioridades->v = realloc(prioridades->v, sizeof(int) * prioridades->nmax * 2);
+        prioridades->nmax *= 2;
+        printf("Capacidade aumentada para: %d\n", prioridades->nmax);
+    }
+
+    printf("Inserindo: %d\n", valor);
+
+    prioridades->v[prioridades->n++] = valor;
+
+    sobe(prioridades, prioridades->n - 1);
+
+    printf("Heap atual: ");
+    heap_imprime(prioridades);
+}
+
+void esvazia_heap(Heap * priori) {
+    int n = priori->n;
+    for (int i = 0; i < n; i++) {
+        printf("%d\n", heap_retira(priori));
+    }
 }
